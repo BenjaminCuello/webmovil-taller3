@@ -1,62 +1,51 @@
-Taller 3 — Desarrollo Web Móvil (UCN)
-1) Grupo y equipo
+# Taller 3 — Desarrollo Web Móvil (UCN)
 
-Grupo 1 — Equipo: SmartCoders
+## 1) Grupo y equipo
 
-2) Integrantes (Nombre — RUT)
+- Grupo 1 — Equipo: SmartCoders
 
-Bastian Salinas — 21.848.994-K
+## 2) Integrantes (Nombre — RUT)
 
-Benjamín Cuello — 21.682.135-1
+- Bastian Salinas — 21.848.994-K  
+- Benjamín Cuello — 21.682.135-1  
+- Benjamín Salas — 21.758.667-4  
+- Tomás Guerra — 21.664.344-5  
 
-Benjamín Salas — 21.758.667-4
+## 3) Descripción del proyecto
 
-Tomás Guerra — 21.664.344-5
+El objetivo principal es construir una aplicación web móvil utilizando **Next.js 14+** para visualizar información proveniente de una base de datos real, mediante un dashboard moderno, responsivo y enfocado en dispositivos móviles.
 
-3) Descripción del proyecto
+La aplicación permite:
+- Visualizar registros almacenados en la base de datos.  
+- Acceder a un dashboard con tablas, métricas y gráficos interactivos.  
+- Aplicar filtros dinámicos que se mantienen entre navegaciones.  
+- Ingresar a una vista detallada por cada registro.  
 
+Todo el diseño se trabaja bajo un enfoque **Mobile First** para garantizar una buena experiencia en diferentes tamaños de pantalla.
 
-El objetivo es construir una aplicación web móvil basada en Next.js que funcione como un dashboard interactivo, conectada a una base de datos real y capaz de mostrar información mediante tablas, gráficos y vistas detalladas.
+## 4) Tecnologías utilizadas
 
-La aplicación permite visualizar un conjunto de registros, aplicar filtros dinámicos, mantener configuraciones entre páginas y acceder a una vista individual por cada elemento. Todo el diseño está trabajado bajo un enfoque Mobile First, buscando una experiencia fluida en dispositivos móviles.
+### **Frontend y arquitectura**
+- Next.js 14 (App Router)
+- React
+- TailwindCSS / ShadCN
+- Librería de gráficos (Chart.js, Recharts o Nivo)
+- Diseño Mobile First
 
-4) Tecnologías utilizadas
-Frontend y arquitectura
+### **Backend y base de datos**
+- API REST construida dentro de Next.js (rutas `/api`)
+- Prisma ORM
+- PostgreSQL
 
-Next.js 14+ (App Router)
+### **Gestión de estado**
+- Redux Toolkit
+- Persistencia de filtros y configuraciones
 
-React
+### **Estructura relevante del proyecto**
+- `app/` — Vistas principales y rutas  
+- `app/api/` — Endpoints CRUD  
+- `lib/prisma/` — Configuración del ORM  
+- `redux/` — Store global y slices  
+- `components/` — Componentes reutilizables  
+- `charts/` — Componentes de gráficos  
 
-TailwindCSS / ShadCN (interfaz y estilo)
-
-Librería de gráficos: Chart.js / Recharts / Nivo (según implementación final)
-
-Mobile First Design
-
-Backend y base de datos
-
-API construida dentro de Next.js usando rutas en /api
-
-Prisma ORM
-
-PostgreSQL (base de datos principal)
-
-Gestión de estado
-
-Redux Toolkit
-
-Persistencia de filtros y estados globales
-
-Estructura relevante del proyecto
-
-app/ — páginas, rutas y vistas
-
-app/api/ — endpoints CRUD de la entidad principal
-
-lib/prisma/ — configuración del ORM
-
-redux/ — slices, store y lógica global
-
-components/ — componentes reutilizables
-
-charts/ — componentes de visualización
