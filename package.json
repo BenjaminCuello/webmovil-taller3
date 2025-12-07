@@ -1,8 +1,10 @@
 {
+  
   "name": "webmovil-taller3",
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "ping:store": "node -r ts-node/register -r tsconfig-paths/register scripts/pingStore.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -26,6 +28,8 @@
     "eslint-config-next": "14.2.5",
     "postcss": "8.4.35",
     "tailwindcss": "3.4.3",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "5.4.5"
   }
 }
