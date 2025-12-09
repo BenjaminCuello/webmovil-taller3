@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
-import TrendAreaChart from "@/charts/TrendAreaChart";
+import { useEffect, useState } from "react";
 import { buildMockRecords } from "@/lib/data/mockRecords";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { selectCharts, selectFilteredRecords, selectListError, selectListStatus } from "@/redux/selectors/dashboardSelectors";
@@ -10,6 +9,10 @@ import { setError, setRecords, setStatus } from "@/redux/slices/listSlice";
 import FilterBar from "@/components/dashboard/FilterBar";
 import MetricsGrid from "@/components/dashboard/MetricsGrid";
 import RecordsTable from "@/components/dashboard/RecordsTable";
+import ChartGallery from "@/components/dashboard/ChartGallery";
+import RecordDetailSheet from "@/components/dashboard/RecordDetailSheet";
+import AppHeader from "@/components/dashboard/AppHeader";
+import { DashboardRecord } from "@/types/dashboard";
 
 export default function DashboardScreen() {
   const dispatch = useAppDispatch();
@@ -17,6 +20,7 @@ export default function DashboardScreen() {
   const error = useAppSelector(selectListError);
   const filteredRecords = useAppSelector(selectFilteredRecords);
   const charts = useAppSelector(selectCharts);
+  const [selectedRecord, setSelectedRecord] = useState<DashboardRecord | null>(null);
 
   useEffect(() => {
     if (status !== "idle") {
@@ -39,25 +43,29 @@ export default function DashboardScreen() {
     dispatch(hydrateCharts(filteredRecords));
   }, [dispatch, filteredRecords]);
 
+  useEffect(() => {
+    if (selectedRecord && !filteredRecords.some(record => record.id === selectedRecord.id)) {
+      setSelectedRecord(null);
+    }
+  }, [filteredRecords, selectedRecord]);
+
+  const handleSelectRecord = (record: DashboardRecord) => setSelectedRecord(record);
+  const closeDetails = () => setSelectedRecord(null);
+
   return (
-    <section className="flex flex-col gap-5">
-      <header className="flex flex-col gap-1">
-        <p className="text-xs uppercase text-slate-400">Panel principal</p>
-        <h1 className="text-3xl font-semibold tracking-tight">Operaciones móviles</h1>
-        <p className="text-sm text-slate-400">Filtros persistentes, datos simulados y sincronización global</p>
-      </header>
+    <section className="flex flex-col gap-5 pb-12">
+      <AppHeader lastUpdated={filteredRecords[0]?.updatedAt} />
       <FilterBar />
-      <section className="grid gap-4 sm:grid-cols-2">
-        <MetricsGrid charts={charts} isLoading={status !== "ready"} />
-        <div className="rounded-3xl bg-slate-900/60 p-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-base font-medium">Evolución</h2>
-            <span className="text-xs text-slate-400">Últimos meses</span>
-          </div>
-          <TrendAreaChart data={charts.trend} />
-        </div>
-      </section>
-      <RecordsTable records={filteredRecords} status={status} error={error} />
+      <MetricsGrid charts={charts} isLoading={status !== "ready"} />
+      <ChartGallery charts={charts} isLoading={status !== "ready"} />
+      <RecordsTable
+        records={filteredRecords}
+        status={status}
+        error={error}
+        onSelectRecord={handleSelectRecord}
+        selectedId={selectedRecord?.id ?? null}
+      />
+      <RecordDetailSheet record={selectedRecord} onClose={closeDetails} />
     </section>
   );
 }

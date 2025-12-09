@@ -1,4 +1,4 @@
-import { ChartState, DashboardRecord, FiltersState } from "@/types/dashboard";
+import { ChartState, DashboardRecord, FiltersState, PerformancePoint, StatusSlice, VelocityPoint } from "@/types/dashboard";
 
 const normalize = (value: string) => value.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
 
@@ -69,6 +69,53 @@ const aggregateCategories = (records: DashboardRecord[]) => {
   return Object.entries(totals).map(([label, value]) => ({ label, value }));
 };
 
+const aggregateStatuses = (records: DashboardRecord[]): StatusSlice[] => {
+  const statusBuckets: Record<string, number> = { activo: 0, pendiente: 0, resuelto: 0 };
+  records.forEach(record => {
+    statusBuckets[record.status] = (statusBuckets[record.status] ?? 0) + 1;
+  });
+  return Object.entries(statusBuckets).map(([label, value]) => ({ label: label as StatusSlice["label"], value }));
+};
+
+const aggregatePerformance = (records: DashboardRecord[]): PerformancePoint[] => {
+  const buckets = records.reduce<Record<string, { completion: number; delta: number; count: number }>>((acc, record) => {
+    if (!acc[record.category]) {
+      acc[record.category] = { completion: 0, delta: 0, count: 0 };
+    }
+    acc[record.category].completion += record.metrics.completion;
+    acc[record.category].delta += record.metrics.delta;
+    acc[record.category].count += 1;
+    return acc;
+  }, {});
+
+  return Object.entries(buckets).map(([category, value]) => ({
+    label: category as PerformancePoint["label"],
+    completion: Math.round(value.completion / value.count),
+    delta: Number((value.delta / value.count).toFixed(1))
+  }));
+};
+
+const aggregateVelocity = (records: DashboardRecord[]): VelocityPoint[] => {
+  const groups = records.reduce<Record<string, { label: string; value: number; timestamp: number }>>((acc, record) => {
+    const date = new Date(record.createdAt);
+    const key = date.toISOString().split("T")[0];
+    if (!acc[key]) {
+      acc[key] = {
+        label: date.toLocaleDateString("es-CL", { day: "2-digit", month: "short" }),
+        value: 0,
+        timestamp: date.getTime()
+      };
+    }
+    acc[key].value += 1;
+    return acc;
+  }, {});
+
+  return Object.values(groups)
+    .sort((a, b) => a.timestamp - b.timestamp)
+    .slice(-7)
+    .map(item => ({ label: item.label, value: item.value }));
+};
+
 const aggregateTotals = (records: DashboardRecord[]) => {
   const revenue = records.reduce((acc, record) => acc + record.amount, 0);
   const active = records.filter(record => record.status === "activo").length;
@@ -81,5 +128,8 @@ export const applyFilters = (records: DashboardRecord[], filters: FiltersState) 
 export const buildChartState = (records: DashboardRecord[]): ChartState => ({
   trend: aggregateTrend(records),
   categoryDistribution: aggregateCategories(records),
+  statusDistribution: aggregateStatuses(records),
+  performanceRadar: aggregatePerformance(records),
+  velocity: aggregateVelocity(records),
   totals: aggregateTotals(records)
 });

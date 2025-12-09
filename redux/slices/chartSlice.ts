@@ -5,6 +5,9 @@ import { ChartState, DashboardRecord } from "@/types/dashboard";
 const initialState: ChartState = {
   trend: [],
   categoryDistribution: [],
+  statusDistribution: [],
+  performanceRadar: [],
+  velocity: [],
   totals: { count: 0, active: 0, revenue: 0 }
 };
 

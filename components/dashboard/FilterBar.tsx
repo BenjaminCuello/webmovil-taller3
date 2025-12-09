@@ -25,18 +25,18 @@ export default function FilterBar() {
   const toggleDirection = () => dispatch(setSortDirection(filters.sortDirection === "asc" ? "desc" : "asc"));
 
   return (
-    <section className="rounded-3xl bg-slate-900/60 p-4 shadow-xl shadow-brand-900/20">
-      <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
+    <section className="rounded-xl border border-sky-100 bg-white/90 p-4 shadow-sm backdrop-blur">
+      <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600">
         <span>Filtros activos</span>
-        <button className="rounded-full bg-white/5 px-3 py-1 text-xs text-white" onClick={() => dispatch(resetFilters())}>
+        <button className="rounded-full border border-slate-300 bg-sky-50 px-3 py-1 text-xs text-slate-700" onClick={() => dispatch(resetFilters())}>
           Reiniciar
         </button>
       </div>
       <div className="mt-4 grid gap-3 sm:grid-cols-3">
         <label className="flex flex-col gap-1 text-sm">
-          <span className="text-xs text-slate-400">Categoría</span>
+          <span className="text-xs text-slate-600">Categoría</span>
           <select
-            className="rounded-2xl border border-white/5 bg-white/5 px-3 py-2 text-sm focus:border-brand-400 focus:outline-none"
+            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-200"
             value={filters.category}
             onChange={event => dispatch(setCategory(event.target.value as RecordCategory | "todas"))}
           >
@@ -48,9 +48,9 @@ export default function FilterBar() {
           </select>
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          <span className="text-xs text-slate-400">Estado</span>
+          <span className="text-xs text-slate-600">Estado</span>
           <select
-            className="rounded-2xl border border-white/5 bg-white/5 px-3 py-2 text-sm focus:border-brand-400 focus:outline-none"
+            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-200"
             value={filters.status}
             onChange={event => dispatch(setStatus(event.target.value as RecordStatus | "todos"))}
           >
@@ -62,10 +62,10 @@ export default function FilterBar() {
           </select>
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          <span className="text-xs text-slate-400">Orden</span>
+          <span className="text-xs text-slate-600">Orden</span>
           <div className="flex items-center gap-2">
             <select
-              className="flex-1 rounded-2xl border border-white/5 bg-white/5 px-3 py-2 text-sm focus:border-brand-400 focus:outline-none"
+              className="flex-1 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-200"
               value={filters.sortBy}
               onChange={event => dispatch(setSortBy(event.target.value as SortBy))}
             >
@@ -75,10 +75,7 @@ export default function FilterBar() {
                 </option>
               ))}
             </select>
-            <button
-              className="rounded-2xl border border-white/5 bg-white/10 px-3 py-2 text-xs"
-              onClick={toggleDirection}
-            >
+            <button className="rounded-md border border-slate-300 px-3 py-2 text-xs" onClick={toggleDirection}>
               {filters.sortDirection === "asc" ? "Asc" : "Desc"}
             </button>
           </div>
@@ -86,21 +83,21 @@ export default function FilterBar() {
       </div>
       <div className="mt-4 grid gap-3 sm:grid-cols-3">
         <label className="flex flex-col gap-1 text-sm sm:col-span-2">
-          <span className="text-xs text-slate-400">Búsqueda</span>
+          <span className="text-xs text-slate-600">Búsqueda</span>
           <input
             type="search"
             placeholder="Nombre, responsable o etiqueta"
-            className="rounded-2xl border border-white/5 bg-white/5 px-3 py-2 text-sm focus:border-brand-400 focus:outline-none"
+            className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-200"
             value={filters.search}
             onChange={event => dispatch(setSearch(event.target.value))}
           />
         </label>
         <div className="grid grid-cols-2 gap-2 text-sm">
           <label className="flex flex-col gap-1">
-            <span className="text-xs text-slate-400">Desde</span>
+            <span className="text-xs text-slate-600">Desde</span>
             <input
               type="date"
-              className="rounded-2xl border border-white/5 bg-white/5 px-3 py-2 text-sm focus:border-brand-400 focus:outline-none"
+              className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-200"
               value={formattedDates.from}
               onChange={event =>
                 dispatch(
@@ -110,10 +107,10 @@ export default function FilterBar() {
             />
           </label>
           <label className="flex flex-col gap-1">
-            <span className="text-xs text-slate-400">Hasta</span>
+            <span className="text-xs text-slate-600">Hasta</span>
             <input
               type="date"
-              className="rounded-2xl border border-white/5 bg-white/5 px-3 py-2 text-sm focus:border-brand-400 focus:outline-none"
+              className="rounded-md border border-slate-300 bg-white px-3 py-2 text-sm focus:border-sky-400 focus:outline-none focus:ring-1 focus:ring-sky-200"
               value={formattedDates.to}
               onChange={event =>
                 dispatch(

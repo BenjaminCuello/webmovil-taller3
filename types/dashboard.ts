@@ -50,9 +50,28 @@ export interface CategorySlice {
   value: number;
 }
 
+export interface StatusSlice {
+  label: RecordStatus;
+  value: number;
+}
+
+export interface PerformancePoint {
+  label: RecordCategory;
+  completion: number;
+  delta: number;
+}
+
+export interface VelocityPoint {
+  label: string;
+  value: number;
+}
+
 export interface ChartState {
   trend: TrendPoint[];
   categoryDistribution: CategorySlice[];
+  statusDistribution: StatusSlice[];
+  performanceRadar: PerformancePoint[];
+  velocity: VelocityPoint[];
   totals: {
     count: number;
     active: number;

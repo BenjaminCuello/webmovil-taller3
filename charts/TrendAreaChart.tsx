@@ -24,8 +24,8 @@ export default function TrendAreaChart({ data }: TrendAreaChartProps) {
               <stop offset="95%" stopColor="#4c79ff" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey="label" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
-          <YAxis stroke="#94a3b8" fontSize={12} tickFormatter={formatCurrency} tickLine={false} axisLine={false} width={80} />
+          <XAxis dataKey="label" stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
+          <YAxis stroke="#475569" fontSize={12} tickFormatter={formatCurrency} tickLine={false} axisLine={false} width={80} />
           <Tooltip cursor={false} formatter={value => formatCurrency(Number(value))} labelFormatter={label => label.toString()} />
           <Area type="monotone" dataKey="value" stroke="#4c79ff" fillOpacity={1} fill="url(#trend)" strokeWidth={2} />
         </AreaChart>
