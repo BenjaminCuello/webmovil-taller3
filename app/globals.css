@@ -3,11 +3,27 @@
 @tailwind utilities;
 
 :root {
+  --bg: #ffffff;
+  --bg-secondary: #f4f4f5;
+  --text: #0f172a;
+  --text-secondary: #475569;
+  --border: #e2e8f0;
+}
+
+.dark {
+  color-scheme: dark;
+  --bg: #020617;
+  --bg-secondary: #0b1220;
+  --text: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --border: #1e293b;
+}
+
+.light {
   color-scheme: light;
 }
 
 body {
   min-height: 100vh;
-  background-color: #e0f2fe;
-  background-image: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 40%, #ffe4e6 100%);
+  background-color: var(--bg);
 }

@@ -1,7 +1,13 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./charts/**/*.{ts,tsx}", "./redux/**/*.{ts,tsx}"],
+  content: [
+    "./app/**/*.{ts,tsx}",
+    "./frontend/app/**/*.{ts,tsx}",
+    "./frontend/components/**/*.{ts,tsx}",
+    "./frontend/charts/**/*.{ts,tsx}",
+    "./frontend/redux/**/*.{ts,tsx}"
+  ],
   theme: {
     extend: {
       colors: {

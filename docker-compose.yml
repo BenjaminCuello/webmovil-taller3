@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: taller3_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      # El host de la BD es el servicio 'db' del compose
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/taller3_db?schema=public"
+    # El comando por defecto del Dockerfile ya hace sync + seed + dev
+
+volumes:
+  db_data:
+

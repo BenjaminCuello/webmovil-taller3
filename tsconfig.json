@@ -20,7 +20,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": [
-        "./*"
+        "./frontend/*"
+      ],
+      "@backend/*": [
+        "./backend/*"
       ]
     },
     "plugins": [
@@ -34,7 +37,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-, "prisma/seed.mjs"  ],
+  ],
   "exclude": [
     "node_modules"
   ]

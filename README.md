@@ -1,51 +1,117 @@
-# Taller 3 — Desarrollo Web Móvil (UCN)
+# Taller 3 - Web Movil
 
-## 1) Grupo y equipo
+## Grupo y equipo
 
-- Grupo 1 — Equipo: SmartCoders
+- Grupo 1 - Equipo: SmartCoders
 
-## 2) Integrantes (Nombre — RUT)
+## Integrantes
 
-- Bastian Salinas — 21.848.994-K  
-- Benjamín Cuello — 21.682.135-1  
-- Benjamín Salas — 21.758.667-4  
-- Tomás Guerra — 21.664.344-5  
+- Bastian Salinas - 21.848.994-K
+- Benjamin Cuello - 21.682.135-1
+- Benjamin Salas - 21.758.667-4
+- Tomas Guerra - 21.664.344-5
 
-## 3) Descripción del proyecto
+## Descripcion del proyecto
 
-El objetivo principal es construir una aplicación web móvil utilizando **Next.js 14+** para visualizar información proveniente de una base de datos real, mediante un dashboard moderno, responsivo y enfocado en dispositivos móviles.
+Aplicacion web movil construida con Next.js 14 que permite visualizar registros almacenados en una base de datos PostgreSQL mediante un dashboard operativo. Se utiliza Prisma como ORM y Redux Toolkit para manejar el estado global.
 
-La aplicación permite:
-- Visualizar registros almacenados en la base de datos.  
-- Acceder a un dashboard con tablas, métricas y gráficos interactivos.  
-- Aplicar filtros dinámicos que se mantienen entre navegaciones.  
-- Ingresar a una vista detallada por cada registro.  
+El dashboard incluye:
 
-Todo el diseño se trabaja bajo un enfoque **Mobile First** para garantizar una buena experiencia en diferentes tamaños de pantalla.
+- Tabla de registros con filtros por categoria, estado, rango de fechas, orden y busqueda de texto.
+- Metricas agregadas (cantidad, activos, ingresos, avance).
+- Al menos cinco graficos (tendencia, categorias, estado operativo, radar de desempeno, velocidad semanal) usando Recharts.
+- Vista de detalle por registro, disponible como modal en el dashboard y como pagina dedicada `/records/[id]`.
+- Tema claro y oscuro con selector en el header, persistente entre recargas.
+- Diseno mobile first y responsivo para movil, tablet y escritorio.
 
-## 4) Tecnologías utilizadas
+## Tecnologias utilizadas
 
-### **Frontend y arquitectura**
+### Frontend y arquitectura
+
 - Next.js 14 (App Router)
 - React
-- TailwindCSS / ShadCN
-- Librería de gráficos (Chart.js, Recharts o Nivo)
-- Diseño Mobile First
+- TailwindCSS
+- Recharts para graficos
 
-### **Backend y base de datos**
-- API REST construida dentro de Next.js (rutas `/api`)
+### Backend y base de datos
+
+- API REST dentro de Next.js (rutas `/app/api/records` y `/backend/api/records`)
 - Prisma ORM
 - PostgreSQL
 
-### **Gestión de estado**
-- Redux Toolkit
-- Persistencia de filtros y configuraciones
+## Instalacion y ejecucion local
 
-### **Estructura relevante del proyecto**
-- `app/` — Vistas principales y rutas  
-- `app/api/` — Endpoints CRUD  
-- `lib/prisma/` — Configuración del ORM  
-- `redux/` — Store global y slices  
-- `components/` — Componentes reutilizables  
-- `charts/` — Componentes de gráficos  
+### Requisitos previos
 
+- Node.js 20 o superior
+- PostgreSQL en ejecucion (local o en contenedor)
+- Variable de entorno `DATABASE_URL` apuntando a la base de datos, por ejemplo:
+  `postgresql://postgres:postgres@localhost:5432/taller3_db?schema=public`
+
+### Ejecucion con Docker
+
+Este proyecto incluye configuracion para Docker y Docker Compose.
+
+1. Asegurarse de tener Docker y Docker Compose instalados.
+
+2. Desde la raiz del proyecto, ejecutar:
+
+   ```bash
+   docker compose up --build
+   ```
+
+   Esto levantara:
+
+   - Un contenedor `db` con PostgreSQL.
+   - Un contenedor `web` con la aplicacion Next.js, que sincroniza el esquema con Prisma, ejecuta el seed y levanta el modo desarrollo.
+
+3. Acceder al dashboard en:
+
+   ```text
+   http://localhost:3000
+   ```
+
+### Pasos para entorno local sin Docker
+
+1. Clonar el repositorio:
+
+   ```bash
+   git clone <url-del-repositorio>
+   cd webmovil-taller3
+   ```
+
+2. Crear el archivo `.env` en la raiz del proyecto (si no existe) con la variable de conexion:
+
+   ```env
+   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/taller3_db?schema=public"
+   ```
+
+3. Instalar dependencias:
+
+   ```bash
+   npm install
+   ```
+
+4. Sincronizar el esquema de la base de datos con Prisma:
+
+   ```bash
+   npm run prisma:sync
+   ```
+
+5. Ejecutar el seed para cargar datos de ejemplo:
+
+   ```bash
+   npm run prisma:seed
+   ```
+
+6. Levantar el servidor de desarrollo:
+
+   ```bash
+   npm run dev
+   ```
+
+7. Abrir el navegador en:
+
+   ```text
+   http://localhost:3000
+   ```

@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RecordCategory {
+  finanzas
+  operaciones
+  marketing
+  rrhh
+  soporte
+}
+
+enum RecordStatus {
+  activo
+  pendiente
+  resuelto
+}
+
+model Record {
+  id         String         @id @default(cuid())
+  title      String
+  owner      String
+  category   RecordCategory
+  status     RecordStatus
+  amount     Float
+  completion Float          @default(0)
+  delta      Float          @default(0)
+  tags       String[]
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  @@map("records")
+}
+
